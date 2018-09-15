@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Buckboard</string>
     <string name="action_settings">Settings</string>
+    <string name="welcome_buckboard">Bem-vindo ao Buckboard</string>
+    <string name="username">Usuário</string>
+    <string name="password">Senha</string>
+    <string name="login">Entrar</string>
+    <string name="create_user">Criar usuário</string>
+    <string name="remember_password">Relembrar senha</string>
+    <string name="enter_account">Entre com sua conta</string>
 </resources>
