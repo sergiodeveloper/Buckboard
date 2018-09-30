@@ -40,4 +40,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="mensagens_array">
+        <item>Mateus</item>
+        <item>Sérgio</item>
+        <item>Ramon</item>
+        <item>Laís</item>
+        <item>Guilherme</item>
+    </string-array>
 </resources>

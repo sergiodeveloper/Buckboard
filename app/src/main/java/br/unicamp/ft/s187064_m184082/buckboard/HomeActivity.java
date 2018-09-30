@@ -25,6 +25,6 @@ public class HomeActivity extends AppCompatActivity {
     public void openCreateNewUserView(View view) {
         Intent homeIntent = new Intent(HomeActivity.this, CreateUserActivity.class);
         startActivity(homeIntent);
-        finish();
+//        finish();
     }
 }

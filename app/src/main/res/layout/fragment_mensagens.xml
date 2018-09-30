@@ -3,15 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MensagensFragment">
+    tools:context=".MensagensFragment"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
 
-    <TextView
-        style="@style/Titulo"
-        android:text="Mensagens" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_mensagens"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Titulo"
+            android:text="Mensagens" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/mensagens_array">
+        </ListView>
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/recycler_view_mensagens"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>-->
+
+    </LinearLayout>
 
 </FrameLayout>

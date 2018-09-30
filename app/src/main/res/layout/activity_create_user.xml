@@ -81,7 +81,7 @@
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Curso" />
+                    android:text="Estado civil" />
 
                 <Spinner
                     android:layout_width="wrap_content"
@@ -125,7 +125,8 @@
                 <android.support.v7.widget.AppCompatButton
                     style="@style/BotaoEnviarFormulario"
                     android:layout_gravity="center_horizontal"
-                    android:text="Cadastrar" />
+                    android:text="Cadastrar"
+                    android:onClick="cadastrar"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
