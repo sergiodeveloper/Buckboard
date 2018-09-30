@@ -17,9 +17,9 @@
             android:text="Mensagens" />
 
         <ListView
+            android:id="@+id/lista_mensagens"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/mensagens_array">
+            android:layout_height="wrap_content">
         </ListView>
         <!--<android.support.v7.widget.RecyclerView-->
             <!--android:id="@+id/recycler_view_mensagens"-->
