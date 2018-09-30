@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -13,8 +13,58 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"></style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ItemFormulario" parent="AppTheme">
+        <item name="android:layout_marginTop">10sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="LegendaFormulario" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="EntradaTextoFormulario" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:background">@drawable/entrada_texto_formulario</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="BotaoEnviarFormulario" parent="AppTheme">
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">19dp</item>
+        <item name="android:paddingBottom">19dp</item>
+        <item name="android:textSize">23dp</item>
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <style name="BotaoSegundaAcaoFormulario" parent="BotaoEnviarFormulario">
+        <item name="android:backgroundTint">@color/secondColorAccent</item>
+    </style>
+
+    <style name="Titulo" parent="AppTheme">
+        <item name="android:textSize">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_marginBottom">40dp</item>
+    </style>
+
 
 </resources>

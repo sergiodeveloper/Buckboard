@@ -25,7 +25,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".CreateUserActivity"></activity>
+        <activity android:name=".CreateUserActivity" />
+        <activity
+            android:name=".ActivityPrincipal"
+            android:label="@string/title_activity_principal"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

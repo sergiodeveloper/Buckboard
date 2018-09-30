@@ -3,146 +3,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    tools:context=".CreateUserActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".CreateUserActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"/>
-    </LinearLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nome:"/>
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+            <TextView
+                style="@style/Titulo"
+                android:text="Cadastre-se" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sobrenome:"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+            <LinearLayout style="@style/ItemFormulario">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sexo:"/>
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:text="Nome" />
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Feminino"/>
+                <EditText style="@style/EntradaTextoFormulario" />
+            </LinearLayout>
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Masculino"/>
+            <LinearLayout style="@style/ItemFormulario">
 
-    </LinearLayout>
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:text="Sobrenome" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+                <EditText style="@style/EntradaTextoFormulario" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Curso:"/>
+            <LinearLayout style="@style/ItemFormulario">
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/cursos" />
-    </LinearLayout>
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:layout_height="wrap_content"
+                    android:text="Sexo" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email:"/>
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Feminino" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Masculino" />
+                </RadioGroup>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Senha:"/>
+            <LinearLayout style="@style/ItemFormulario">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
-    </LinearLayout>
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:text="Curso" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/estado_civil" />
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Repetir Senha:"/>
+            <LinearLayout style="@style/ItemFormulario">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"/>
-    </LinearLayout>
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:text="Email" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp">
+                <EditText style="@style/EntradaTextoFormulario" />
+            </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cadastrar"/>
-    </LinearLayout>
+            <LinearLayout style="@style/ItemFormulario">
+
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:text="Senha" />
+
+                <EditText
+                    style="@style/EntradaTextoFormulario"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ItemFormulario">
+
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:text="Repetir senha" />
+
+                <EditText
+                    style="@style/EntradaTextoFormulario"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ItemFormulario">
+
+                <android.support.v7.widget.AppCompatButton
+                    style="@style/BotaoEnviarFormulario"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Cadastrar" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

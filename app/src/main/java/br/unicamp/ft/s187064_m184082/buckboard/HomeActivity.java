@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -11,6 +12,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Button testButton = findViewById(R.id.testButton);
+
+        testButton.setOnClickListener(view -> {
+            Intent homeIntent = new Intent(HomeActivity.this, ActivityPrincipal.class);
+            startActivity(homeIntent);
+            finish();
+        });
     }
 
     public void openCreateNewUserView(View view) {
