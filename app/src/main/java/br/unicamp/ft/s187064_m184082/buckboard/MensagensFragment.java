@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,28 +37,29 @@ public class MensagensFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_mensagens, container, false);
         }
 
-        final List<String[]> mensagensList = new LinkedList<>();
-        mensagensList.add(new String[] { "Mateus", "A entrega é até segunda"});
-        mensagensList.add(new String[] { "Sérgio", "Blz, estou fazendo o vídeo"});
-        mensagensList.add(new String[] { "Laís", "Pra quando é o trabalho de android"});
-        mensagensList.add(new String[] { "Ramon", "Semana que vem eu vou"});
-        mensagensList.add(new String[] { "Guilherme", "Falow valeu"});
-        mensagensList.add(new String[] { "Alexandre", "Que sala é a palestra?"});
-        mensagensList.add(new String[] { "Alex", "Valeu"});
-        mensagensList.add(new String[] { "Felipe", "Precisa colocar ListView"});
-        mensagensList.add(new String[] { "Kelvin", "Amanhã tem a palestra na PA07"});
+        final List<PreviewMensagem> mensagensList = new LinkedList<>();
+        mensagensList.add(new PreviewMensagem("Mateus", "A entrega é até segunda", R.drawable.mateus_tanaka));
+        mensagensList.add(new PreviewMensagem( "Sérgio", "Blz, estou fazendo o vídeo", R.drawable.sergio_filho));
+        mensagensList.add(new PreviewMensagem( "Laís", "Pra quando é o trabalho de android", R.drawable.lais_arcaro));
+        mensagensList.add(new PreviewMensagem( "Amadeu", "Semana que vem eu vou", R.drawable.amadeu_carvalho));
+        mensagensList.add(new PreviewMensagem( "Guilherme", "Falow valeu", R.drawable.gilherme_santos));
+        mensagensList.add(new PreviewMensagem( "Alex", "Que sala é a palestra?", R.drawable.alex_rafael));
+        mensagensList.add(new PreviewMensagem( "Felipe", "Precisa colocar ListView", R.drawable.felipe_tosta));
+        mensagensList.add(new PreviewMensagem( "Kelvin", "Amanhã tem a palestra na PA07", R.drawable.kelwin_falico));
 
-        ArrayAdapter<String[]> adapter = new ArrayAdapter<String[]>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, mensagensList){
+        ArrayAdapter<PreviewMensagem> adapter = new ArrayAdapter<PreviewMensagem>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, mensagensList){
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view =  super.getView(position, convertView, parent);
 
-                String[] entry = mensagensList.get(position);
+                PreviewMensagem entry = mensagensList.get(position);
                 TextView textViewNome = view.findViewById(R.id.nome_contato);
                 TextView textViewMensagem = view.findViewById(R.id.ultima_mensagem);
-                textViewNome.setText(entry[0]);
-                textViewMensagem.setText(entry[1]);
+                ImageView imageView = view.findViewById(R.id.foto);
+                textViewNome.setText(entry.getNome());
+                textViewMensagem.setText(entry.getMensagem());
+                imageView.setImageResource(entry.getFoto());
 
                 return view;
             }

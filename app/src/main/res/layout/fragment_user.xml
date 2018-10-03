@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserFragment"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Titulo"
+        android:layout_marginTop="0dp"
+        android:text="Meu Perfil" />
+
+    <ImageView
+        android:id="@+id/foto"
+        android:src="@drawable/mateus_tanaka"
+        android:layout_width="200dp"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mateus Hikari Tanaka" />
+
+    <TextView
+        android:textSize="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="m184082@dac.unicamp.br" />
+
+</LinearLayout>

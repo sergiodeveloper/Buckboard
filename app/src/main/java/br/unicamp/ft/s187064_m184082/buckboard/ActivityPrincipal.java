@@ -49,7 +49,18 @@ public class ActivityPrincipal extends AppCompatActivity
         fm = getSupportFragmentManager();
 
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.fragmentContainer, new PublicacoesFragment());
+        PublicacoesFragment publicacoes = new PublicacoesFragment();
+        ft.replace(R.id.fragmentContainer, publicacoes);
+        publicacoes.setOnPostShareListener(new PublicacoesFragment.PostShareListener() {
+            @Override
+            public void compartilhar(Postagem postagem) {
+                FragmentTransaction ft = fm.beginTransaction();
+                SharePostFragment fragment = new SharePostFragment();
+                fragment.setPost(postagem);
+                ft.replace(R.id.fragmentContainer, fragment);
+                ft.commit();
+            }
+        });
         ft.commit();
     }
 
@@ -93,11 +104,27 @@ public class ActivityPrincipal extends AppCompatActivity
 
         if (id == R.id.nav_publicacoes) {
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragmentContainer, new PublicacoesFragment());
+            PublicacoesFragment publicacoes = new PublicacoesFragment();
+            publicacoes.setOnPostShareListener(new PublicacoesFragment.PostShareListener() {
+                @Override
+                public void compartilhar(Postagem postagem) {
+                    FragmentTransaction ft = fm.beginTransaction();
+                    SharePostFragment fragment = new SharePostFragment();
+                    fragment.setPost(postagem);
+                    ft.replace(R.id.fragmentContainer, fragment);
+                    ft.commit();
+                }
+            });
+
+            ft.replace(R.id.fragmentContainer, publicacoes);
             ft.commit();
         } else if (id == R.id.nav_mensagens) {
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragmentContainer, new MensagensFragment());
+            ft.commit();
+        } else if (id == R.id.nav_perfil) {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.fragmentContainer, new UserFragment());
             ft.commit();
         }
 //
