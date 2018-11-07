@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "243704144425",
+    "firebase_url": "https://buckboard2018.firebaseio.com",
+    "project_id": "buckboard2018",
+    "storage_bucket": "buckboard2018.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243704144425:android:fc4d336b30368b63",
+        "android_client_info": {
+          "package_name": "br.unicamp.ft.s187064_m184082.buckboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243704144425-o2575im4914tjmnocdm06pvvq96njfs3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.unicamp.ft.s187064_m184082.buckboard",
+            "certificate_hash": "ea6f7b8a021caf04ddb6a1c12eaabe0cde5c10de"
+          }
+        },
+        {
+          "client_id": "243704144425-8s9lqi36bcm23m6r54f2g6tr0vg70v6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhpxinmm-wFUwzwgEXmGC8rJsPSt_rBoE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243704144425-8s9lqi36bcm23m6r54f2g6tr0vg70v6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
