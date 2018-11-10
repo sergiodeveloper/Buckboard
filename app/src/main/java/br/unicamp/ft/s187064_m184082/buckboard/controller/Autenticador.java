@@ -61,7 +61,10 @@ public class Autenticador {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) return;
+        if (currentUser != null) {
+            callbackLogin.sucesso(currentUser.getDisplayName(), currentUser.getEmail(), currentUser .getPhotoUrl());
+            return;
+        }
 
         mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -77,6 +80,7 @@ public class Autenticador {
                     callbackLogin.sucesso(user.getDisplayName(), user.getEmail(), user.getPhotoUrl());
                 } else {
                     callbackLogin.erro();
+                    task.getException().printStackTrace();
                 }
             }
         });

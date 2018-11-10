@@ -23,21 +23,6 @@ public class ActivityCadastrarUsuario extends AppCompatActivity {
 
     public void cadastrar(View view) {
 
-        Autenticador.CallbackLogin callbackLogin = new Autenticador.CallbackLogin() {
-            @Override
-            public void sucesso(String nome, String email, Uri foto) {
-                // Abrir main activity
-                Intent intent = new Intent(ActivityCadastrarUsuario.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-
-            @Override
-            public void erro() {
-                Toast.makeText(ActivityCadastrarUsuario.this, "Falha ao cadastrar", Toast.LENGTH_SHORT).show();
-            }
-        };
-
         String nome = ((EditText) findViewById(R.id.nome)).getText().toString();
         String sobrenome = ((EditText) findViewById(R.id.sobrenome)).getText().toString();
         String sexo = ((RadioGroup) findViewById(R.id.sexo)).getCheckedRadioButtonId() == R.id.feminino? "feminino" : "masculino";
@@ -72,10 +57,26 @@ public class ActivityCadastrarUsuario extends AppCompatActivity {
             return;
         }
 
-        if(senha.length() < 5) {
+        if(senha.length() < 6) {
             Toast.makeText(this, "A senha é muito fraca", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+        Autenticador.CallbackLogin callbackLogin = new Autenticador.CallbackLogin() {
+            @Override
+            public void sucesso(String nome, String email, Uri foto) {
+                // Abrir main activity
+                Intent intent = new Intent(ActivityCadastrarUsuario.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void erro() {
+                Toast.makeText(ActivityCadastrarUsuario.this, "Falha ao cadastrar", Toast.LENGTH_SHORT).show();
+            }
+        };
 
         Autenticador.cadastrarUsuarioEmailSenha(callbackLogin, nome, sobrenome, sexo, estadoCivil, email, senha);
 
