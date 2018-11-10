@@ -21,14 +21,6 @@ public class ActivityEntrar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrar);
 
-        Button testButton = findViewById(R.id.testButton);
-
-        testButton.setOnClickListener(view -> {
-            Intent homeIntent = new Intent(ActivityEntrar.this, MainActivity.class);
-            startActivity(homeIntent);
-            finish();
-        });
-
         if(Autenticador.isLogado()) {
             abrirMainActivity();
         }

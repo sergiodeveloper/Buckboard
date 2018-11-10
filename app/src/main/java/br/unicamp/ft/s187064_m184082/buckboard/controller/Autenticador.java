@@ -1,11 +1,6 @@
 package br.unicamp.ft.s187064_m184082.buckboard.controller;
 
-import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.telecom.Call;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,8 +14,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import br.unicamp.ft.s187064_m184082.buckboard.model.Usuario;
-
-import static android.content.ContentValues.TAG;
 
 public class Autenticador {
 
