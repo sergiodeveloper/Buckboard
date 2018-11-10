@@ -12,8 +12,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import br.unicamp.ft.s187064_m184082.buckboard.model.Usuario;
 
@@ -22,7 +25,7 @@ import static android.content.ContentValues.TAG;
 public class Autenticador {
 
     public static interface CallbackLogin {
-        void sucesso(String nome, String email, Uri foto);
+        void sucesso(Usuario usuario);
 
         void erro();
     }
@@ -39,7 +42,23 @@ public class Autenticador {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            callbackLogin.sucesso(currentUser.getDisplayName(), currentUser.getEmail(), currentUser .getPhotoUrl());
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+            mFirebaseDatabaseReference.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                    usuario.setEmail(user.getEmail());
+                    usuario.setIdFirebase(user.getUid());
+
+                    callbackLogin.sucesso(usuario);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
             return;
         }
 
@@ -49,7 +68,21 @@ public class Autenticador {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
 
-                    callbackLogin.sucesso(user.getDisplayName(), user.getEmail(), user.getPhotoUrl());
+                    DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                    mFirebaseDatabaseReference.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                            usuario.setEmail(user.getEmail());
+                            usuario.setIdFirebase(user.getUid());
+
+                            callbackLogin.sucesso(usuario);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
                 } else {
                     callbackLogin.erro();
                 }
@@ -69,7 +102,18 @@ public class Autenticador {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            callbackLogin.sucesso(currentUser.getDisplayName(), currentUser.getEmail(), currentUser .getPhotoUrl());
+            Usuario usuario = new Usuario();
+            usuario.setEmail(currentUser.getEmail());
+            if(currentUser.getPhotoUrl() != null) {
+                usuario.setFoto(currentUser.getPhotoUrl().toString());
+            }
+            usuario.setIdFirebase(currentUser.getUid());
+            usuario.setNome(nome);
+            usuario.setSobrenome(sobrenome);
+            usuario.setEstadoCivil(estadoCivil);
+            usuario.setSexo(sexo);
+
+            callbackLogin.sucesso(usuario);
             return;
         }
 
@@ -79,12 +123,21 @@ public class Autenticador {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
 
-                    Usuario usuario = new Usuario(nome, sobrenome, sexo, estadoCivil, email);
+                    Usuario usuario = new Usuario();
+                    usuario.setEmail(user.getEmail());
+                    if(user.getPhotoUrl() != null) {
+                        usuario.setFoto(user.getPhotoUrl().toString());
+                    }
+                    usuario.setIdFirebase(user.getUid());
+                    usuario.setNome(nome);
+                    usuario.setSobrenome(sobrenome);
+                    usuario.setEstadoCivil(estadoCivil);
+                    usuario.setSexo(sexo);
 
                     DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
                     mFirebaseDatabaseReference.child("users").child(user.getUid()).setValue(usuario);
 
-                    callbackLogin.sucesso(user.getDisplayName(), user.getEmail(), user.getPhotoUrl());
+                    callbackLogin.sucesso(usuario);
                 } else {
                     callbackLogin.erro();
                     task.getException().printStackTrace();

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import br.unicamp.ft.s187064_m184082.buckboard.R;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
+import br.unicamp.ft.s187064_m184082.buckboard.model.Usuario;
 
 public class ActivityCadastrarUsuario extends AppCompatActivity {
 
@@ -69,7 +70,7 @@ public class ActivityCadastrarUsuario extends AppCompatActivity {
 
         Autenticador.CallbackLogin callbackLogin = new Autenticador.CallbackLogin() {
             @Override
-            public void sucesso(String nome, String email, Uri foto) {
+            public void sucesso(Usuario usuario) {
                 abrirMainActivity();
             }
 

@@ -7,14 +7,8 @@ public class Usuario {
     private String sexo;
     private String estadoCivil;
     private String email;
-
-    public Usuario(String nome, String sobrenome, String sexo, String estadoCivil, String email) {
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.sexo = sexo;
-        this.estadoCivil = estadoCivil;
-        this.email = email;
-    }
+    private String idFirebase;
+    private String foto;
 
     public String getNome() {
         return nome;
@@ -54,5 +48,21 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getIdFirebase() {
+        return idFirebase;
+    }
+
+    public void setIdFirebase(String idFirebase) {
+        this.idFirebase = idFirebase;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
