@@ -27,6 +27,13 @@ public class Autenticador {
         void erro();
     }
 
+    public static boolean isLogado() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser != null;
+    }
+
     public static void entrarEmailSenha(CallbackLogin callbackLogin, String email, String senha) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 

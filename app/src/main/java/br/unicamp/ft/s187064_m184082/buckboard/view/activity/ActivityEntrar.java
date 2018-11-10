@@ -26,6 +26,10 @@ public class ActivityEntrar extends AppCompatActivity {
             startActivity(homeIntent);
             finish();
         });
+
+        if(Autenticador.isLogado()) {
+            abrirMainActivity();
+        }
     }
 
     public void openCreateNewUserView(View view) {
@@ -50,10 +54,7 @@ public class ActivityEntrar extends AppCompatActivity {
         Autenticador.CallbackLogin callbackLogin = new Autenticador.CallbackLogin() {
             @Override
             public void sucesso(String nome, String email, Uri foto) {
-                // Abrir main activity
-                Intent intent = new Intent(ActivityEntrar.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                abrirMainActivity();
             }
 
             @Override
@@ -65,5 +66,11 @@ public class ActivityEntrar extends AppCompatActivity {
         Autenticador.entrarEmailSenha(callbackLogin, email, senha);
 
         Toast.makeText(this, "Por favor aguarde...", Toast.LENGTH_SHORT).show();
+    }
+
+    private void abrirMainActivity () {
+        Intent intent = new Intent(ActivityEntrar.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

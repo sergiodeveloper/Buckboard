@@ -19,6 +19,10 @@ public class ActivityCadastrarUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
+
+        if(Autenticador.isLogado()) {
+            abrirMainActivity();
+        }
     }
 
     public void cadastrar(View view) {
@@ -66,10 +70,7 @@ public class ActivityCadastrarUsuario extends AppCompatActivity {
         Autenticador.CallbackLogin callbackLogin = new Autenticador.CallbackLogin() {
             @Override
             public void sucesso(String nome, String email, Uri foto) {
-                // Abrir main activity
-                Intent intent = new Intent(ActivityCadastrarUsuario.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                abrirMainActivity();
             }
 
             @Override
@@ -81,5 +82,11 @@ public class ActivityCadastrarUsuario extends AppCompatActivity {
         Autenticador.cadastrarUsuarioEmailSenha(callbackLogin, nome, sobrenome, sexo, estadoCivil, email, senha);
 
         Toast.makeText(this, "Por favor, aguarde...", Toast.LENGTH_SHORT).show();
+    }
+
+    private void abrirMainActivity () {
+        Intent intent = new Intent(ActivityCadastrarUsuario.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,5 +1,6 @@
 package br.unicamp.ft.s187064_m184082.buckboard.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
 import br.unicamp.ft.s187064_m184082.buckboard.R;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.MensagensFragment;
@@ -130,21 +132,13 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragmentContainer, new UserFragment());
             ft.commit();
+        } else if (id == R.id.nav_sair) {
+            Autenticador.logout();
+
+            Intent intent = new Intent(MainActivity.this, ActivityEntrar.class);
+            startActivity(intent);
+            finish();
         }
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
