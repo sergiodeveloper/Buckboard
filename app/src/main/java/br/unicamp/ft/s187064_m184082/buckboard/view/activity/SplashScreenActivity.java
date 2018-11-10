@@ -1,4 +1,4 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

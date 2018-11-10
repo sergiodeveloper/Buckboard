@@ -1,4 +1,4 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 
 
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 
 /**

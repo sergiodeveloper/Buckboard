@@ -1,4 +1,4 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 /**
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic

@@ -1,4 +1,4 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 
 
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 
 /**

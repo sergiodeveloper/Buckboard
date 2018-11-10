@@ -1,4 +1,4 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 
 
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import br.unicamp.ft.s187064_m184082.buckboard.model.PreviewMensagem;
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 
 /**

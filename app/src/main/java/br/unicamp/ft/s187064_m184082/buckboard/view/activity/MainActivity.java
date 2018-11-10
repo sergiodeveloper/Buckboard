@@ -1,11 +1,8 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
+import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.MensagensFragment;
+import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.PublicacoesFragment;
+import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.SharePostFragment;
+import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.UserFragment;
 
-public class ActivityPrincipal extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fm;
@@ -26,7 +27,7 @@ public class ActivityPrincipal extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //

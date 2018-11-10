@@ -1,10 +1,12 @@
-package br.unicamp.ft.s187064_m184082.buckboard;
+package br.unicamp.ft.s187064_m184082.buckboard.view.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 public class ActivityEntrar extends AppCompatActivity {
 
@@ -16,7 +18,7 @@ public class ActivityEntrar extends AppCompatActivity {
         Button testButton = findViewById(R.id.testButton);
 
         testButton.setOnClickListener(view -> {
-            Intent homeIntent = new Intent(ActivityEntrar.this, ActivityPrincipal.class);
+            Intent homeIntent = new Intent(ActivityEntrar.this, MainActivity.class);
             startActivity(homeIntent);
             finish();
         });
