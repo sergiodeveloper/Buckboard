@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.ActivityEntrar" />
-        <activity android:name=".view.activity.CreateUserActivity" />
+        <activity android:name=".view.activity.ActivityCadastrarUsuario" />
         <activity
             android:name=".view.activity.MainActivity"
             android:label="@string/title_activity_principal"

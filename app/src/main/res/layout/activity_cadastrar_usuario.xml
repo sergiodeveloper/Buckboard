@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.activity.CreateUserActivity">
+    tools:context=".view.activity.ActivityCadastrarUsuario">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -39,18 +39,18 @@
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Nome" />
+                    android:text="Nome" android:labelFor="@+id/nome"/>
 
-                <EditText style="@style/EntradaTextoFormulario" />
+                <EditText style="@style/EntradaTextoFormulario" android:id="@+id/nome" />
             </LinearLayout>
 
             <LinearLayout style="@style/ItemFormulario">
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Sobrenome" />
+                    android:text="Sobrenome" android:labelFor="@id/sobrenome"/>
 
-                <EditText style="@style/EntradaTextoFormulario" />
+                <EditText style="@style/EntradaTextoFormulario" android:id="@+id/sobrenome"/>
             </LinearLayout>
 
             <LinearLayout style="@style/ItemFormulario">
@@ -58,21 +58,25 @@
                 <TextView
                     style="@style/LegendaFormulario"
                     android:layout_height="wrap_content"
-                    android:text="Sexo" />
+                    android:text="Sexo"
+                    android:labelFor="@id/sexo"/>
 
                 <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sexo">
 
                     <android.support.v7.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Feminino" />
+                        android:text="Feminino"
+                        android:id="@+id/feminino"/>
 
                     <android.support.v7.widget.AppCompatRadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Masculino" />
+                        android:text="Masculino"
+                        android:id="@+id/masculino"/>
                 </RadioGroup>
 
             </LinearLayout>
@@ -81,43 +85,45 @@
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Estado civil" />
+                    android:text="Estado civil"
+                    android:labelFor="@id/estadoCivil"/>
 
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/estado_civil" />
+                    android:entries="@array/estado_civil"
+                    android:id="@+id/estadoCivil"/>
             </LinearLayout>
 
             <LinearLayout style="@style/ItemFormulario">
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Email" />
+                    android:text="Email" android:labelFor="@id/email"/>
 
-                <EditText style="@style/EntradaTextoFormulario" />
+                <EditText style="@style/EntradaTextoFormulario" android:id="@+id/email" />
             </LinearLayout>
 
             <LinearLayout style="@style/ItemFormulario">
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Senha" />
+                    android:text="Senha" android:labelFor="@+id/senha" />
 
                 <EditText
                     style="@style/EntradaTextoFormulario"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword" android:id="@+id/senha"/>
             </LinearLayout>
 
             <LinearLayout style="@style/ItemFormulario">
 
                 <TextView
                     style="@style/LegendaFormulario"
-                    android:text="Repetir senha" />
+                    android:text="Repetir senha" android:labelFor="@id/senha_repita" />
 
                 <EditText
                     style="@style/EntradaTextoFormulario"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword" android:id="@+id/senha_repita"/>
             </LinearLayout>
 
             <LinearLayout style="@style/ItemFormulario">

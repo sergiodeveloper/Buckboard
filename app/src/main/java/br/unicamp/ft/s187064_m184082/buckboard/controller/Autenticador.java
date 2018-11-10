@@ -12,6 +12,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import br.unicamp.ft.s187064_m184082.buckboard.model.Usuario;
 
 import static android.content.ContentValues.TAG;
 
@@ -64,6 +68,11 @@ public class Autenticador {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
+
+                    Usuario usuario = new Usuario(nome, sobrenome, sexo, estadoCivil, email);
+
+                    DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+                    mFirebaseDatabaseReference.child("users").child(user.getUid()).setValue(usuario);
 
                     callbackLogin.sucesso(user.getDisplayName(), user.getEmail(), user.getPhotoUrl());
                 } else {

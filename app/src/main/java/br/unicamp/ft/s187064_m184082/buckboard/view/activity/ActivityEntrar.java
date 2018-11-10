@@ -29,7 +29,7 @@ public class ActivityEntrar extends AppCompatActivity {
     }
 
     public void openCreateNewUserView(View view) {
-        Intent homeIntent = new Intent(ActivityEntrar.this, CreateUserActivity.class);
+        Intent homeIntent = new Intent(ActivityEntrar.this, ActivityCadastrarUsuario.class);
         startActivity(homeIntent);
 //        finish();
     }
@@ -37,6 +37,15 @@ public class ActivityEntrar extends AppCompatActivity {
     public void entrar(View view) {
         String email = ((EditText) findViewById(R.id.email)).getText().toString();
         String senha = ((EditText) findViewById(R.id.senha)).getText().toString();
+
+        if(email.isEmpty()) {
+            Toast.makeText(this, "Digite seu email", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(senha.isEmpty()){
+            Toast.makeText(this, "Digite sua senha", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         Autenticador.CallbackLogin callbackLogin = new Autenticador.CallbackLogin() {
             @Override
