@@ -54,14 +54,15 @@
                         android:inputType="textPassword" />
                 </LinearLayout>
 
-                <LinearLayout style="@style/ItemFormulario">
+                <!--LinearLayout style="@style/ItemFormulario">
 
                     <android.support.v7.widget.AppCompatCheckBox
-                        android:id="@+id/remember_password_cbx"
+                        android:id="@+id/keep_logged"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/remember_password" />
-                </LinearLayout>
+                        android:text="@string/remember_password"
+                        android:checked="true"/>
+                </LinearLayout-->
 
                 <LinearLayout style="@style/ItemFormulario">
 
