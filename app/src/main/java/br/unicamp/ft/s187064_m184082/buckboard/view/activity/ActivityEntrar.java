@@ -6,24 +6,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity {
+public class ActivityEntrar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_entrar);
 
         Button testButton = findViewById(R.id.testButton);
 
         testButton.setOnClickListener(view -> {
-            Intent homeIntent = new Intent(HomeActivity.this, ActivityPrincipal.class);
+            Intent homeIntent = new Intent(ActivityEntrar.this, ActivityPrincipal.class);
             startActivity(homeIntent);
             finish();
         });
     }
 
     public void openCreateNewUserView(View view) {
-        Intent homeIntent = new Intent(HomeActivity.this, CreateUserActivity.class);
+        Intent homeIntent = new Intent(ActivityEntrar.this, CreateUserActivity.class);
         startActivity(homeIntent);
 //        finish();
     }

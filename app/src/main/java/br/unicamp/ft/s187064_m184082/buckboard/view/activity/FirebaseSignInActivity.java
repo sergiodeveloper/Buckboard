@@ -22,10 +22,10 @@ import com.google.android.gms.tasks.Task;
  * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
  * profile.
  */
-public class SignInActivity extends AppCompatActivity implements
+public class FirebaseSignInActivity extends AppCompatActivity implements
         View.OnClickListener {
 
-    private static final String TAG = "SignInActivity";
+    private static final String TAG = "FirebaseSignInActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -34,7 +34,7 @@ public class SignInActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_spash_screen);
 
         // Views
         mStatusTextView = findViewById(R.id.status);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".ActivityEntrar">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingTop="16dp"
@@ -32,11 +32,14 @@
 
                     <TextView
                         style="@style/LegendaFormulario"
-                        android:text="@string/username" />
+                        android:layout_height="wrap_content"
+                        android:text="E-mail" />
 
                     <EditText
-                        android:id="@+id/username_etx"
-                        style="@style/EntradaTextoFormulario" />
+                        android:id="@+id/email"
+                        style="@style/EntradaTextoFormulario"
+                        android:inputType="textEmailAddress"
+                        android:layout_width="match_parent" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/ItemFormulario">
