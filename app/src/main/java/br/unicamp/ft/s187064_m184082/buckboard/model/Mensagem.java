@@ -2,21 +2,30 @@ package br.unicamp.ft.s187064_m184082.buckboard.model;
 
 public class Mensagem {
 
-    private String remetente;
+    public static final String dataHoraFormat = "dd/MM/yyyy HH:mm:ss";
+
+    private String remetenteIdFirebase;
 
     private String mensagem;
 
-    public Mensagem(String remetente, String mensagem) {
-        this.remetente = remetente;
+    private String dataHora;
+
+    public Mensagem() {
+        //required for firebase
+    }
+
+    public Mensagem(String remetenteIdFirebase, String mensagem, String dataHora) {
+        this.remetenteIdFirebase = remetenteIdFirebase;
         this.mensagem = mensagem;
+        this.dataHora = dataHora;
     }
 
-    public String getRemetente() {
-        return remetente;
+    public String getRemetenteIdFirebase() {
+        return remetenteIdFirebase;
     }
 
-    public void setRemetente(String remetente) {
-        this.remetente = remetente;
+    public void setRemetenteIdFirebase(String remetenteIdFirebase) {
+        this.remetenteIdFirebase = remetenteIdFirebase;
     }
 
     public String getMensagem() {
@@ -25,5 +34,13 @@ public class Mensagem {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public String getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(String dataHora) {
+        this.dataHora = dataHora;
     }
 }

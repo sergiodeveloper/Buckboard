@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.MensagensFragment"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp">
@@ -27,5 +28,14 @@
             <!--android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>-->
 
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_nova_conversa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/blue_grey_500"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </FrameLayout>

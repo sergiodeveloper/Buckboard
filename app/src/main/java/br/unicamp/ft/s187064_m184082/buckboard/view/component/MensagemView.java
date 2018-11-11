@@ -21,7 +21,7 @@ public class MensagemView extends LinearLayout {
 
 
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        if(mensagem.getRemetente() == Sessao.getUsuarioLogado()) {
+        if(mensagem.getRemetenteIdFirebase() == Sessao.getUsuarioLogado()) {
             // Minha mensagem
             params.setMargins(40, 0, 0, 0);
         }
