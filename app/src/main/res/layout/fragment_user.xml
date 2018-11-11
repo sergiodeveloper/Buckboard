@@ -3,31 +3,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.UserFragment"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".view.fragment.UserFragment">
 
-    <TextView
-        style="@style/Titulo"
-        android:layout_marginTop="0dp"
-        android:text="Meu Perfil" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/foto"
-        android:src="@drawable/mateus_tanaka"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
 
-    <TextView
-        android:textSize="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mateus Hikari Tanaka" />
+            <LinearLayout android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <TextView
+                    style="@style/Titulo"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Meu Perfil" />
+            </LinearLayout>
 
-    <TextView
-        android:textSize="25dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="m184082@dac.unicamp.br" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@mipmap/ic_launcher" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ItemFormulario">
+
+                <EditText
+                    android:id="@+id/nome_perfil"
+                    style="@style/EntradaTextoFormulario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nome" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/ItemFormulario">
+
+                <EditText
+                    android:id="@+id/sobrenome_perfil"
+                    style="@style/EntradaTextoFormulario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/sobrenome" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/ItemFormulario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp">
+
+                <RadioGroup
+                    android:id="@+id/sexo_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/LegendaFormulario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sexo" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/feminino_perfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/feminino" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/masculino_perfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/masculino" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout style="@style/ItemFormulario"
+                android:layout_marginStart="15dp">
+
+                <TextView
+                    style="@style/LegendaFormulario"
+                    android:labelFor="@id/estadoCivil"
+                    android:text="@string/estado_civil" />
+
+                <Spinner
+                    android:id="@+id/estado_civil_perfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/estado_civil" />
+            </LinearLayout>
+
+            <LinearLayout android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/botao_alterar_senha"
+                    style="@style/BotaoEnviarFormulario"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Alterar senha"/>
+            </LinearLayout>
+
+            <LinearLayout style="@style/ItemFormulario">
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/botao_salvar_perfil"
+                    style="@style/BotaoEnviarFormulario"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/salvar"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>
