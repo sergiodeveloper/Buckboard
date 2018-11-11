@@ -1,7 +1,6 @@
 package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,13 +23,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.unicamp.ft.s187064_m184082.buckboard.R;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Conversa;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Mensagem;
 import br.unicamp.ft.s187064_m184082.buckboard.model.PreviewMensagem;
-import br.unicamp.ft.s187064_m184082.buckboard.R;
 
 
 /**
@@ -40,7 +41,7 @@ public class MensagensFragment extends Fragment {
 
     private View view;
 
-    private List<Conversa> conversas;
+    private HashMap<String, Conversa> conversas;
 
     public MensagensFragment() {
         // Required empty public constructor
@@ -52,7 +53,7 @@ public class MensagensFragment extends Fragment {
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_mensagens, container, false);
-            conversas = new ArrayList<>();
+            conversas = new HashMap<>();
         }
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -60,16 +61,10 @@ public class MensagensFragment extends Fragment {
 
         final ListView listv = view.findViewById(R.id.lista_mensagens);
         final List<PreviewMensagem> mensagensList = new LinkedList<>();
-
-
-        //mensagensList.add(new PreviewMensagem("Mateus", "A entrega é até segunda", R.drawable.mateus_tanaka));
-//        mensagensList.add(new PreviewMensagem("Sérgio", "Blz, estou fazendo o vídeo", R.drawable.sergio_filho));
-//        mensagensList.add(new PreviewMensagem("Laís", "Pra quando é o trabalho de android", R.drawable.lais_arcaro));
-//        mensagensList.add(new PreviewMensagem("Amadeu", "Semana que vem eu vou", R.drawable.amadeu_carvalho));
-//        mensagensList.add(new PreviewMensagem("Guilherme", "Falow valeu", R.drawable.gilherme_santos));
-//        mensagensList.add(new PreviewMensagem("Alex", "Que sala é a palestra?", R.drawable.alex_rafael));
-//        mensagensList.add(new PreviewMensagem("Felipe", "Precisa colocar ListView", R.drawable.felipe_tosta));
-//        mensagensList.add(new PreviewMensagem("Kelvin", "Amanhã tem a palestra na PA07", R.drawable.kelwin_falico));
+//
+//
+//        mensagensList.add(new PreviewMensagem("1","Mateus", "A entrega é até segunda", R.drawable.mateus_tanaka));
+//        mensagensList.add(new PreviewMensagem("2", "Sérgio", "Blz, estou fazendo o vídeo", R.drawable.sergio_filho));
 
         ArrayAdapter<PreviewMensagem> adapter = new ArrayAdapter<PreviewMensagem>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, mensagensList) {
             @NonNull
@@ -83,27 +78,32 @@ public class MensagensFragment extends Fragment {
                 ImageView imageView = view.findViewById(R.id.foto);
                 textViewNome.setText(entry.getNome());
                 textViewMensagem.setText(entry.getMensagem());
-                imageView.setImageResource(entry.getFoto());
+                imageView.setImageResource(R.drawable.mateus_tanaka);
 
                 return view;
             }
         };
-//
-//        listv.setAdapter(adapter);
+
+        listv.setAdapter(adapter);
+
+        exibirMensagems(user, mensagensList, adapter);
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressLint("ResourceType")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Conversa conversa = conversas.get(position);
                 ConversaFragment conversaFragment = new ConversaFragment();
-                conversaFragment.setConversaId("conversaId");
+                conversaFragment.setArguments(conversa.getId());
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.layout.fragment_conversa, conversaFragment ,"findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                        .replace(R.id.fragmentContainer, conversaFragment, "conversaFragment")
+                        .addToBackStack(null).commit();
             }
         });
 
+        return view;
+    }
+
+    private void exibirMensagems(FirebaseUser user, List<PreviewMensagem> mensagensList, ArrayAdapter<PreviewMensagem> adapter) {
         if (user != null) {
             DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -112,13 +112,13 @@ public class MensagensFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot conversaSnapshot : dataSnapshot.child("conversa").getChildren()) {
                         Conversa conversa = conversaSnapshot.getValue(Conversa.class);
-
-                        for (Mensagem mensagem : conversa.getMensagens()) {
-                            mensagensList.add(new PreviewMensagem(mensagem.getRemetenteIdFirebase(), mensagem.getMensagem(), R.drawable.mateus_tanaka));
+                        conversa.setId(conversaSnapshot.getKey());
+                        for (Mensagem mensagem : conversa.getMensagens().values()) {
+                            mensagensList.add(new PreviewMensagem(conversaSnapshot.getKey(), mensagem.getRemetenteIdFirebase(), mensagem.getMensagem(), R.drawable.mateus_tanaka));
                         }
-
-                        adapter.notifyDataSetChanged();
+                        conversas.put(conversaSnapshot.getKey(), conversa);
                     }
+                    adapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -127,8 +127,5 @@ public class MensagensFragment extends Fragment {
                 }
             });
         }
-
-        return view;
     }
-
 }

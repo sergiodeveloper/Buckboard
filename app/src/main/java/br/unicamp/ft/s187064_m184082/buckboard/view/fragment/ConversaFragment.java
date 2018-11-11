@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Mensageiro;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Conversa;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Mensagem;
 import br.unicamp.ft.s187064_m184082.buckboard.model.PreviewMensagem;
@@ -35,7 +37,7 @@ public class ConversaFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setConversaId(String conversaId) {
+    public void setArguments(String conversaId){
         this.conversaId = conversaId;
     }
 
@@ -56,15 +58,14 @@ public class ConversaFragment extends Fragment {
             mFirebaseDatabaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot conversaSnapshot : dataSnapshot.child("conversa").child(conversaId).getChildren()) {
-                        Conversa conversa = conversaSnapshot.getValue(Conversa.class);
+                        Conversa conversa = dataSnapshot.child("conversa").child(conversaId).getValue(Conversa.class);
 
                         EditText lista = view.findViewById(R.id.mensagens_conversa);
-                        for (Mensagem mensagem : conversa.getMensagens()) {
+                        for (Mensagem mensagem : conversa.getMensagens().values()) {
                             lista.append("\n");
                             lista.append(mensagem.getRemetenteIdFirebase() + ": " + mensagem.getMensagem());
                         }
-                    }
+
                 }
 
                 @Override
@@ -73,6 +74,18 @@ public class ConversaFragment extends Fragment {
                 }
             });
         }
+
+        Button enviarBtn = view.findViewById(R.id.btn_enviar_msg);
+        enviarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText mensagem = view.findViewById(R.id.mensagem_digitada);
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                Mensageiro.enviarMensagem(conversaId, user.getUid(), mensagem.getText().toString());
+            }
+        });
         
         return view;
     }

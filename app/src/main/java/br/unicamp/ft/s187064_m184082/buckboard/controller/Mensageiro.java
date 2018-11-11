@@ -6,26 +6,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 
-import br.unicamp.ft.s187064_m184082.buckboard.model.Conversa;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Mensagem;
 
 public class Mensageiro {
 
-    public void enviarMensagem(String remetenteId, String destinatarioId, String mensagem) {
+    public static void enviarMensagem(String conversaId, String remetenteId, String mensagem) {
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat df = new SimpleDateFormat(Mensagem.dataHoraFormat);
 
-        final Mensagem ms = new Mensagem(remetenteId, mensagem, df.format(new Date()));
+        final Mensagem novaMensagem = new Mensagem(remetenteId, mensagem, df.format(new Date()));
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        //TODO pegar conversar by remetente e destinatario, adicionar nova mensagem no array de mensagens
-        databaseReference.child("conversa").push().setValue(new Conversa(remetenteId, destinatarioId, Collections.singletonList(ms)));
+        databaseReference.child("conversa").child(conversaId).child("mensagens").push().setValue(novaMensagem);
     }
 
-//    public List<Conversa> recuperarConversas (String usuarioId) {
-//
-//    }
 }
