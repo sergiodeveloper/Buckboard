@@ -10,6 +10,8 @@ public class Mensagem {
 
     private String dataHora;
 
+    private String id;
+
     public Mensagem() {
         //required for firebase
     }
@@ -42,5 +44,13 @@ public class Mensagem {
 
     public void setDataHora(String dataHora) {
         this.dataHora = dataHora;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }

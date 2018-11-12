@@ -13,15 +13,18 @@ public class Conversa {
 
     private Map<String, Mensagem> mensagens;
 
+    private String idUltimaMensagem;
+
     public Conversa() {
         //Required for Firebase
         this.mensagens = new HashMap<>();
     }
 
-    public Conversa(String primeiroUsuarioIdFirebase, String segundoUsuarioIdFirebase, Map<String, Mensagem> mensagens) {
+    public Conversa(String primeiroUsuarioIdFirebase, String segundoUsuarioIdFirebase, Map<String, Mensagem> mensagens, String idUltimaMensagem) {
         this.primeiroUsuarioIdFirebase = primeiroUsuarioIdFirebase;
         this.segundoUsuarioIdFirebase = segundoUsuarioIdFirebase;
         this.mensagens = mensagens;
+        this.idUltimaMensagem = idUltimaMensagem;
     }
 
     public Conversa(String id, String primeiroUsuarioIdFirebase, String segundoUsuarioIdFirebase, Map<String, Mensagem> mensagens) {
@@ -61,5 +64,13 @@ public class Conversa {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setIdUltimaMensagem(String idUltimaMensagem) {
+        this.idUltimaMensagem = idUltimaMensagem;
+    }
+
+    public String getIdUltimaMensagem() {
+        return idUltimaMensagem;
     }
 }

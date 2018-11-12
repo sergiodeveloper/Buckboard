@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Mensageiro;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Conversa;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Mensagem;
 import br.unicamp.ft.s187064_m184082.buckboard.model.PreviewMensagem;
@@ -41,7 +44,7 @@ public class MensagensFragment extends Fragment {
 
     private View view;
 
-    private HashMap<String, Conversa> conversas;
+    private List<Conversa> conversas;
 
     public MensagensFragment() {
         // Required empty public constructor
@@ -53,29 +56,43 @@ public class MensagensFragment extends Fragment {
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_mensagens, container, false);
-            conversas = new HashMap<>();
         }
+
+        conversas = new ArrayList<>();
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
         final ListView listv = view.findViewById(R.id.lista_mensagens);
-        final List<PreviewMensagem> mensagensList = new LinkedList<>();
 //
 //
 //        mensagensList.add(new PreviewMensagem("1","Mateus", "A entrega é até segunda", R.drawable.mateus_tanaka));
 //        mensagensList.add(new PreviewMensagem("2", "Sérgio", "Blz, estou fazendo o vídeo", R.drawable.sergio_filho));
 
-        ArrayAdapter<PreviewMensagem> adapter = new ArrayAdapter<PreviewMensagem>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, mensagensList) {
+        ArrayAdapter<Conversa> adapter = new ArrayAdapter<Conversa>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, conversas) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
 
-                PreviewMensagem entry = mensagensList.get(position);
                 TextView textViewNome = view.findViewById(R.id.nome_contato);
                 TextView textViewMensagem = view.findViewById(R.id.ultima_mensagem);
                 ImageView imageView = view.findViewById(R.id.foto);
+
+                Conversa conversa = conversas.get(position);
+
+                if(!conversa.getMensagens().containsKey(conversa.getIdUltimaMensagem())) {
+                    textViewNome.setText(conversa.getPrimeiroUsuarioIdFirebase());
+                    textViewMensagem.setText("Nenhuma mensagem");
+                    imageView.setImageResource(R.drawable.mateus_tanaka);
+                    return view;
+                }
+
+                Mensagem ultimaMensagem = conversa.getMensagens().get(conversa.getIdUltimaMensagem());
+
+
+                PreviewMensagem entry = new PreviewMensagem(conversa.getId(), ultimaMensagem.getRemetenteIdFirebase(), ultimaMensagem.getMensagem(), R.drawable.mateus_tanaka);
+
                 textViewNome.setText(entry.getNome());
                 textViewMensagem.setText(entry.getMensagem());
                 imageView.setImageResource(R.drawable.mateus_tanaka);
@@ -86,7 +103,7 @@ public class MensagensFragment extends Fragment {
 
         listv.setAdapter(adapter);
 
-        exibirMensagems(user, mensagensList, adapter);
+        atualizarConversas(adapter);
 
         listv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,29 +120,21 @@ public class MensagensFragment extends Fragment {
         return view;
     }
 
-    private void exibirMensagems(FirebaseUser user, List<PreviewMensagem> mensagensList, ArrayAdapter<PreviewMensagem> adapter) {
-        if (user != null) {
-            DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+    private void atualizarConversas(ArrayAdapter<Conversa> adapter) {
+        if (!Autenticador.isLogado()) return;
 
-            mFirebaseDatabaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot conversaSnapshot : dataSnapshot.child("conversa").getChildren()) {
-                        Conversa conversa = conversaSnapshot.getValue(Conversa.class);
-                        conversa.setId(conversaSnapshot.getKey());
-                        for (Mensagem mensagem : conversa.getMensagens().values()) {
-                            mensagensList.add(new PreviewMensagem(conversaSnapshot.getKey(), mensagem.getRemetenteIdFirebase(), mensagem.getMensagem(), R.drawable.mateus_tanaka));
-                        }
-                        conversas.put(conversaSnapshot.getKey(), conversa);
-                    }
-                    adapter.notifyDataSetChanged();
-                }
+        Mensageiro.cadastrarListenerConversas(new Mensageiro.ListenerConversas() {
+            @Override
+            public void conversaAdicionada(Conversa conversa) {
+                adapter.add(conversa);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                adapter.notifyDataSetChanged();
+            }
 
-                }
-            });
-        }
+            @Override
+            public void conversaRemovida(Conversa conversa) {
+                Mensageiro.removerListenerMensagem(conversa.getId());
+            }
+        });
     }
 }
