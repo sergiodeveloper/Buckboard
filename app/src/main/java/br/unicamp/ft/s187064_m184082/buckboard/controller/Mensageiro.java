@@ -1,16 +1,15 @@
 package br.unicamp.ft.s187064_m184082.buckboard.controller;
 
-import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,14 +29,13 @@ public class Mensageiro {
     }
 
     public static void enviarMensagem(String conversaId, String remetenteId, String mensagem) {
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat df = new SimpleDateFormat(Mensagem.dataHoraFormat);
-
-        final Mensagem novaMensagem = new Mensagem(remetenteId, mensagem, df.format(new Date()));
+        final Mensagem novaMensagem = new Mensagem(remetenteId, mensagem, System.currentTimeMillis());
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
         databaseReference.child("conversa").child(conversaId).child("mensagens").push().setValue(novaMensagem);
+
+        //Alterando ultima mensagem
+        databaseReference.child("conversa").child(conversaId).child("idUltimaMensagem").setValue(mensagem);
     }
 
     private static ValueEventListener listenerConversaAtual = null;
@@ -45,7 +43,7 @@ public class Mensageiro {
     public static void cadastrarListenerConversas(ListenerConversas listenerConversas) {
         DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if(listenerConversaAtual != null) {
+        if (listenerConversaAtual != null) {
             mFirebaseDatabaseReference.child("conversa").removeEventListener(listenerConversaAtual);
         }
 
@@ -68,34 +66,56 @@ public class Mensageiro {
         mFirebaseDatabaseReference.child("conversa").addValueEventListener(listenerConversaAtual);
     }
 
-    private static Map<String, ValueEventListener> listenersMensagem = new HashMap<>();
+
+    private static Map<String, ChildEventListener> listenersMensagem = new HashMap<>();
 
     public static void cadastrarListenerMensagem(String idConversa, ListenerMensagem listenerMensagem) {
         DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        if(listenersMensagem.containsKey(idConversa)) {
-            mFirebaseDatabaseReference.child("conversa").child(idConversa).removeEventListener(listenersMensagem.get(idConversa));
+        if (listenersMensagem.containsKey(idConversa)) {
+            mFirebaseDatabaseReference.child("conversa").child(idConversa).child("mensagens").removeEventListener(listenersMensagem.get(idConversa));
             listenersMensagem.remove(idConversa);
         }
 
-        ValueEventListener valueEventListener = new ValueEventListener() {
+        ChildEventListener childEventListener = new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot conversaSnapshot : dataSnapshot.getChildren()) {
-                    Mensagem mensagem = conversaSnapshot.getValue(Mensagem.class);
-                    mensagem.setId(conversaSnapshot.getKey());
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Mensagem mensagem = dataSnapshot.getValue(Mensagem.class);
+                mensagem.setId(dataSnapshot.getKey());
 
-                    listenerMensagem.mensagemAdicionada(mensagem);
-                }
+                listenerMensagem.mensagemAdicionada(mensagem);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Mensagem mensagem = dataSnapshot.getValue(Mensagem.class);
+                mensagem.setId(dataSnapshot.getKey());
+
+                listenerMensagem.mensagemAdicionada(mensagem);
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         };
-        listenersMensagem.put(idConversa, valueEventListener);
 
-        mFirebaseDatabaseReference.child("conversa").child(idConversa).addValueEventListener(valueEventListener);
+        listenersMensagem.put(idConversa, childEventListener);
+
+        //mFirebaseDatabaseReference.child("conversa").child(idConversa).addValueEventListener(valueEventListener);
+
+        mFirebaseDatabaseReference.child("conversa").child(idConversa).child("mensagens").addChildEventListener(childEventListener);
     }
 
     public static void removerListenerMensagem(String idConversa) {

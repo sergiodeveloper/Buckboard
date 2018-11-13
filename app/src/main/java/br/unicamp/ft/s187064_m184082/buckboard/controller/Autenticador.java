@@ -23,6 +23,47 @@ public class Autenticador {
         void erro();
     }
 
+    public interface CallbackUsuario {
+        void receberUsuario(Usuario usuario);
+        void erro();
+    }
+
+    private static Usuario usuarioLogado;
+
+    public static void getUsuarioLogado(CallbackUsuario callbackUsuario) {
+        if(!isLogado()) return;
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabaseReference.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.getValue(Usuario.class);
+                usuario.setEmail(user.getEmail());
+                usuario.setIdFirebase(user.getUid());
+
+                usuarioLogado = usuario;
+                callbackUsuario.receberUsuario(usuario);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                usuarioLogado = null;
+                callbackUsuario.erro();
+            }
+        });
+    }
+
+    public static String getIdUsuarioLogado() {
+        if(!isLogado()) return null;
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        return currentUser.getUid();
+    }
+
     public static boolean isLogado() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -45,6 +86,7 @@ public class Autenticador {
                     usuario.setEmail(user.getEmail());
                     usuario.setIdFirebase(user.getUid());
 
+                    usuarioLogado = usuario;
                     callbackLogin.sucesso(usuario);
                 }
 
@@ -69,6 +111,7 @@ public class Autenticador {
                             usuario.setEmail(user.getEmail());
                             usuario.setIdFirebase(user.getUid());
 
+                            usuarioLogado = usuario;
                             callbackLogin.sucesso(usuario);
                         }
 
@@ -77,6 +120,7 @@ public class Autenticador {
                         }
                     });
                 } else {
+                    usuarioLogado = null;
                     callbackLogin.erro();
                 }
             }
@@ -85,7 +129,7 @@ public class Autenticador {
 
     public static void logout() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+        usuarioLogado = null;
         mAuth.signOut();
     }
 
@@ -106,6 +150,7 @@ public class Autenticador {
             usuario.setEstadoCivil(estadoCivil);
             usuario.setSexo(sexo);
 
+            usuarioLogado = usuario;
             callbackLogin.sucesso(usuario);
             return;
         }
@@ -130,8 +175,10 @@ public class Autenticador {
                     DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
                     mFirebaseDatabaseReference.child("users").child(user.getUid()).setValue(usuario);
 
+                    usuarioLogado = usuario;
                     callbackLogin.sucesso(usuario);
                 } else {
+                    usuarioLogado = null;
                     callbackLogin.erro();
                     task.getException().printStackTrace();
                 }

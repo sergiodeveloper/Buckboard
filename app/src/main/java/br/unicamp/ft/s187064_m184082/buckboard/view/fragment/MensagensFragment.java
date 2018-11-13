@@ -83,8 +83,8 @@ public class MensagensFragment extends Fragment {
 
                 if(!conversa.getMensagens().containsKey(conversa.getIdUltimaMensagem())) {
                     textViewNome.setText(conversa.getPrimeiroUsuarioIdFirebase());
-                    textViewMensagem.setText("Nenhuma mensagem");
-                    imageView.setImageResource(R.drawable.mateus_tanaka);
+                    textViewMensagem.setText(conversa.getIdUltimaMensagem());
+                    imageView.setImageResource(R.mipmap.ic_launcher);
                     return view;
                 }
 

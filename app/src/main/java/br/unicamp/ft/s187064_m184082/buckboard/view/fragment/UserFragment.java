@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Usuario;
 
 
@@ -58,12 +59,13 @@ public class UserFragment extends Fragment {
         estadoCivilSpinner = view.findViewById(R.id.estado_civil_perfil);
         sexoRadioGroup = view.findViewById(R.id.sexo_perfil);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(!Autenticador.isLogado()) {
+            return view;
+        }
 
-        if (currentUser != null) {
+
             DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-            mFirebaseDatabaseReference.child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            mFirebaseDatabaseReference.child("users").child(Autenticador.getIdUsuarioLogado()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Usuario usuario = dataSnapshot.getValue(Usuario.class);
@@ -79,7 +81,6 @@ public class UserFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-        }
 
         AppCompatButton botaoSalvar = view.findViewById(R.id.botao_salvar_perfil);
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
@@ -90,13 +91,11 @@ public class UserFragment extends Fragment {
                 String sexo = sexoRadioGroup.getCheckedRadioButtonId() == R.id.feminino_perfil ? "feminino" : "masculino";
                 String estadoCivil = estadoCivilSpinner.getSelectedItem().toString();
 
-                FirebaseUser user = mAuth.getCurrentUser();
-
                 DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-                mFirebaseDatabaseReference.child("users").child(user.getUid()).child("nome").setValue(nome);
-                mFirebaseDatabaseReference.child("users").child(user.getUid()).child("sobrenome").setValue(sobrenome);
-                mFirebaseDatabaseReference.child("users").child(user.getUid()).child("sexo").setValue(sexo);
-                mFirebaseDatabaseReference.child("users").child(user.getUid()).child("estadoCivil").setValue(estadoCivil);
+                mFirebaseDatabaseReference.child("users").child(Autenticador.getIdUsuarioLogado()).child("nome").setValue(nome);
+                mFirebaseDatabaseReference.child("users").child(Autenticador.getIdUsuarioLogado()).child("sobrenome").setValue(sobrenome);
+                mFirebaseDatabaseReference.child("users").child(Autenticador.getIdUsuarioLogado()).child("sexo").setValue(sexo);
+                mFirebaseDatabaseReference.child("users").child(Autenticador.getIdUsuarioLogado()).child("estadoCivil").setValue(estadoCivil);
 
                 Toast.makeText(getContext(), "Perfil atualizado", Toast.LENGTH_SHORT).show();
             }
