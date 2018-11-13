@@ -123,4 +123,9 @@ public class Mensageiro {
         mFirebaseDatabaseReference.child("conversa").child(idConversa).removeEventListener(listenersMensagem.get(idConversa));
     }
 
+    public static void criarConversa(Conversa conversa){
+        DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseDatabaseReference.child("conversa").push().setValue(conversa);
+    }
+
 }

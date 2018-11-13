@@ -56,6 +56,15 @@ public class MensagensFragment extends Fragment {
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_mensagens, container, false);
+
+            View addConversa = view.findViewById(R.id.add_nova_conversa);
+
+            addConversa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Mensageiro.criarConversa(new Conversa());
+                }
+            });
         }
 
         conversas = new ArrayList<>();
@@ -64,10 +73,6 @@ public class MensagensFragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
 
         final ListView listv = view.findViewById(R.id.lista_mensagens);
-//
-//
-//        mensagensList.add(new PreviewMensagem("1","Mateus", "A entrega é até segunda", R.drawable.mateus_tanaka));
-//        mensagensList.add(new PreviewMensagem("2", "Sérgio", "Blz, estou fazendo o vídeo", R.drawable.sergio_filho));
 
         ArrayAdapter<Conversa> adapter = new ArrayAdapter<Conversa>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, conversas) {
             @NonNull

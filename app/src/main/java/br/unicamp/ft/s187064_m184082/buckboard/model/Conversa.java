@@ -15,6 +15,8 @@ public class Conversa {
 
     private String idUltimaMensagem;
 
+    private String nome;
+
     public Conversa() {
         //Required for Firebase
         this.mensagens = new HashMap<>();
@@ -72,5 +74,13 @@ public class Conversa {
 
     public String getIdUltimaMensagem() {
         return idUltimaMensagem;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }
