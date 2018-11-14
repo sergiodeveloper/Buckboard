@@ -76,19 +76,19 @@ public class PublicacoesFragment extends Fragment {
 
             botaoPublicar = view.findViewById(R.id.botao_compartilhar);
             entradaPublicacao = view.findViewById(R.id.entrada_publicacao);
-            botaoPublicar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String publicacaoNova = entradaPublicacao.getText().toString().trim();
-                    if(publicacaoNova.isEmpty()) {
-                        return;
-                    }
-
-                    Postagem postagem = new Postagem(publicacaoNova, null, Autenticador.getIdUsuarioLogado(), "normal", null);
-
-                    Publicador.publicarPostagem(postagem);
-                }
-            });
+//            botaoPublicar.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    String publicacaoNova = entradaPublicacao.getText().toString().trim();
+//                    if(publicacaoNova.isEmpty()) {
+//                        return;
+//                    }
+//
+//                    Postagem postagem = new Postagem(publicacaoNova, null, Autenticador.getIdUsuarioLogado(), "normal", null);
+//
+//                    Publicador.publicarPostagem(postagem);
+//                }
+//            });
 
         }
 

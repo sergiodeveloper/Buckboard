@@ -1,5 +1,7 @@
 package br.unicamp.ft.s187064_m184082.buckboard.model;
 
+import com.google.firebase.database.ServerValue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,23 +19,16 @@ public class Conversa {
 
     private String nome;
 
+    private Object timestamp;
+
     public Conversa() {
         //Required for Firebase
         this.mensagens = new HashMap<>();
     }
 
-    public Conversa(String primeiroUsuarioIdFirebase, String segundoUsuarioIdFirebase, Map<String, Mensagem> mensagens, String idUltimaMensagem) {
-        this.primeiroUsuarioIdFirebase = primeiroUsuarioIdFirebase;
-        this.segundoUsuarioIdFirebase = segundoUsuarioIdFirebase;
-        this.mensagens = mensagens;
-        this.idUltimaMensagem = idUltimaMensagem;
-    }
-
-    public Conversa(String id, String primeiroUsuarioIdFirebase, String segundoUsuarioIdFirebase, Map<String, Mensagem> mensagens) {
-        this.id = id;
-        this.primeiroUsuarioIdFirebase = primeiroUsuarioIdFirebase;
-        this.segundoUsuarioIdFirebase = segundoUsuarioIdFirebase;
-        this.mensagens = mensagens;
+    public Conversa(String nome) {
+        this.nome = nome;
+        this.timestamp = ServerValue.TIMESTAMP;
     }
 
     public String getPrimeiroUsuarioIdFirebase() {
@@ -82,5 +77,13 @@ public class Conversa {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Object getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Object timestamp) {
+        this.timestamp = timestamp;
     }
 }

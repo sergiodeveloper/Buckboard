@@ -38,7 +38,7 @@ public class Mensageiro {
         databaseReference.child("conversa").child(conversaId).child("idUltimaMensagem").setValue(mensagem);
     }
 
-    private static ValueEventListener listenerConversaAtual = null;
+    private static ChildEventListener listenerConversaAtual = null;
 
     public static void cadastrarListenerConversas(ListenerConversas listenerConversas) {
         DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
@@ -47,23 +47,53 @@ public class Mensageiro {
             mFirebaseDatabaseReference.child("conversa").removeEventListener(listenerConversaAtual);
         }
 
-        listenerConversaAtual = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot conversaSnapshot : dataSnapshot.getChildren()) {
-                    Conversa conversa = conversaSnapshot.getValue(Conversa.class);
-                    conversa.setId(conversaSnapshot.getKey());
+//        listenerConversaAtual = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot conversaSnapshot : dataSnapshot.getChildren()) {
+//                    Conversa conversa = conversaSnapshot.getValue(Conversa.class);
+//                    conversa.setId(conversaSnapshot.getKey());
+//                    listenerConversas.conversaAdicionada(conversa);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        };
 
-                    listenerConversas.conversaAdicionada(conversa);
-                }
+        listenerConversaAtual = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Conversa conversa = dataSnapshot.getValue(Conversa.class);
+                conversa.setId(dataSnapshot.getKey());
+                listenerConversas.conversaAdicionada(conversa);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Conversa conversa = dataSnapshot.getValue(Conversa.class);
+                conversa.setId(dataSnapshot.getKey());
+                listenerConversas.conversaAdicionada(conversa);
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         };
 
-        mFirebaseDatabaseReference.child("conversa").addValueEventListener(listenerConversaAtual);
+        mFirebaseDatabaseReference.child("conversa").addChildEventListener(listenerConversaAtual);
     }
 
 

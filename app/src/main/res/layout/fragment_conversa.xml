@@ -6,9 +6,9 @@
     android:layout_margin="16dp">
 
     <TextView
-        android:id="@+id/nome_destinarario_conversa"
-        android:text="Mateus"
-        android:textSize="25dp"
+        android:id="@+id/nome_conversa"
+        android:text="Nome conversa"
+        android:textSize="30dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,7 +19,7 @@
         android:id="@+id/scroll_mensagens"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/nome_destinarario_conversa"
+        android:layout_below="@id/nome_conversa"
         android:layout_above="@+id/mensagem_botao">
 
         <LinearLayout

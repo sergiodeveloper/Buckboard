@@ -52,7 +52,7 @@ public class SharePostFragment extends Fragment {
 
     private void bind() {
         ImageView imageView = new ImageView(view.getContext());
-        imageView.setImageResource(post.getFoto());
+        //imageView.setImageResource(post.getFoto());
 
         TextView textView = new TextView(view.getContext());
         textView.setText(post.getConteudo());

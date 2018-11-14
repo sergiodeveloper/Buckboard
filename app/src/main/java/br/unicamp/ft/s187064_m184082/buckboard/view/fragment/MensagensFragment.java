@@ -1,41 +1,30 @@
 package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.Comparator;
 import java.util.List;
 
 import br.unicamp.ft.s187064_m184082.buckboard.R;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Mensageiro;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Conversa;
-import br.unicamp.ft.s187064_m184082.buckboard.model.Mensagem;
-import br.unicamp.ft.s187064_m184082.buckboard.model.PreviewMensagem;
 
 
 /**
@@ -46,6 +35,8 @@ public class MensagensFragment extends Fragment {
     private View view;
 
     private List<Conversa> conversas;
+
+    private EditText input;
 
     public MensagensFragment() {
         // Required empty public constructor
@@ -63,7 +54,7 @@ public class MensagensFragment extends Fragment {
             addConversa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Mensageiro.criarConversa(new Conversa());
+                    exibirDialogNovaConversa();
                 }
             });
         }
@@ -104,7 +95,7 @@ public class MensagensFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Conversa conversa = conversas.get(position);
                 ConversaFragment conversaFragment = new ConversaFragment();
-                conversaFragment.setArguments(conversa.getId());
+                conversaFragment.setArguments(conversa.getId(), conversa.getNome());
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainer, conversaFragment, "conversaFragment")
                         .addToBackStack(null).commit();
@@ -120,9 +111,28 @@ public class MensagensFragment extends Fragment {
         Mensageiro.cadastrarListenerConversas(new Mensageiro.ListenerConversas() {
             @Override
             public void conversaAdicionada(Conversa conversa) {
-                adapter.clear();
-                adapter.add(conversa);
 
+                for(Conversa conversaVisivel : conversas){
+                    //Se for edição de mensagem
+                    if(conversa.getId().equals(conversaVisivel.getId())) {
+                        conversaVisivel.setId(conversa.getIdUltimaMensagem());
+                        adapter.remove(conversaVisivel);
+                        adapter.add(conversa);
+
+                        adapter.sort(new Comparator<Conversa>() {
+                            @Override
+                            public int compare(Conversa c1, Conversa c2) {
+                                return ((Long) c1.getTimestamp()).compareTo((Long) c2.getTimestamp());
+                            }
+                        });
+
+                        adapter.notifyDataSetChanged();
+                        return;
+                    }
+                }
+
+                //Caso a mensagem nao existe
+                adapter.add(conversa);
                 adapter.notifyDataSetChanged();
             }
 
@@ -131,5 +141,31 @@ public class MensagensFragment extends Fragment {
                 Mensageiro.removerListenerMensagem(conversa.getId());
             }
         });
+    }
+
+    private void exibirDialogNovaConversa(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Novo chat");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setMessage("Informe um nome para o chat:");
+        input = new EditText(getContext());
+        builder.setView(input);
+        builder.setPositiveButton("Criar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                final Conversa novaConversa = new Conversa(input.getText().toString());
+                Mensageiro.criarConversa(novaConversa);
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 }

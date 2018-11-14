@@ -2,7 +2,6 @@ package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,19 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ScrollView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -39,21 +29,21 @@ import br.unicamp.ft.s187064_m184082.buckboard.view.component.MensagemView;
 public class ConversaFragment extends Fragment {
 
     private String conversaId;
+    private String conversaNome;
 
     private List<Mensagem> mensagens = new ArrayList<>();
-
     private View view;
-
     private LinearLayout listaMensagens;
-
     private ScrollView scrollView;
+    private TextView textViewNome;
 
     public ConversaFragment() {
         // Required empty public constructor
     }
 
-    public void setArguments(String conversaId) {
+    public void setArguments(String conversaId, String conversaNome) {
         this.conversaId = conversaId;
+        this.conversaNome = conversaNome;
     }
 
     @Override
@@ -62,9 +52,10 @@ public class ConversaFragment extends Fragment {
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_conversa, container, false);
+            textViewNome = view.findViewById(R.id.nome_conversa);
+            textViewNome.setText(conversaNome);
 
             Mensageiro.cadastrarListenerMensagem(conversaId, new Mensageiro.ListenerMensagem() {
-
                 @Override
                 public void mensagemAdicionada(Mensagem mensagem) {
                     mensagens.add(mensagem);
@@ -86,6 +77,7 @@ public class ConversaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText mensagem = view.findViewById(R.id.mensagem_digitada);
+
                 Mensageiro.enviarMensagem(conversaId, Autenticador.getIdUsuarioLogado(), mensagem.getText().toString());
                 mensagem.setText(null);
             }
