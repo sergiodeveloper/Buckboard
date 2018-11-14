@@ -28,7 +28,7 @@
                 android:orientation="vertical"></LinearLayout>
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/botaocompartilhar"
+                android:id="@+id/botao_compartilhar"
                 style="@style/BotaoEnviarFormulario"
                 android:layout_margin="15dp"
                 android:text="Compartilhar" />

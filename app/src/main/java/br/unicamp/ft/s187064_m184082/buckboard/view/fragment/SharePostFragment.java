@@ -38,7 +38,7 @@ public class SharePostFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_share_post, container, false);
 
-        view.findViewById(R.id.botaocompartilhar).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.botao_compartilhar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(view.getContext(), "Por favor, cadastre-se para compartilhar", Toast.LENGTH_SHORT).show();
