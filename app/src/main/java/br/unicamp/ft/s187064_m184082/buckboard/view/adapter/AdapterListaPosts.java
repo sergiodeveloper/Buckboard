@@ -97,6 +97,7 @@ public class AdapterListaPosts extends BaseAdapter {
             view = (LinearLayout) inflater.inflate(R.layout.template_postagem_compartilhada, parent, false);
 
             ((TextView) view.findViewById(R.id.nome_publicador)).setText(postagem.getIdUsuario());
+            ((ImageView) view.findViewById(R.id.imagem_perfil)).setImageResource(R.drawable.googleg_color);
 
             LinearLayout container = view.findViewById(R.id.postArea);
 
