@@ -1,5 +1,6 @@
 package br.unicamp.ft.s187064_m184082.buckboard.model;
 
+import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
 public class Postagem {
@@ -12,6 +13,9 @@ public class Postagem {
     private String idReferenciada;
     private String id;
     private Object timestamp;
+
+    private static long idCounter = 0;
+    private long idLong = idCounter++;
 
     public Postagem() {
     }
@@ -79,5 +83,10 @@ public class Postagem {
 
     public void setTimestamp(Object timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Exclude
+    public long getIdLong() {
+        return idLong;
     }
 }

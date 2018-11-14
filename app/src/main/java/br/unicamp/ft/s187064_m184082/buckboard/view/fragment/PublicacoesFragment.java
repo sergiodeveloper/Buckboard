@@ -7,8 +7,10 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Publicador;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
 import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.view.adapter.AdapterListaPosts;
 
 
 /**
@@ -26,20 +29,19 @@ public class PublicacoesFragment extends Fragment {
 
     private View view;
 
-    private PostShareListener onPostShareListener;
-
     private AppCompatButton botaoPublicar;
 
     private EditText entradaPublicacao;
 
+    private ListView listViewPublicacoes;
+
     private List<Postagem> listPostagem = new ArrayList<>();
+    private AdapterListaPosts adapterListaPosts;
+    private AdapterListaPosts.PostShareListener onPostShareListener;
+
 
     public PublicacoesFragment() {
         // Required empty public constructor
-    }
-
-    public static interface PostShareListener {
-        public void compartilhar(Postagem postagem);
     }
 
     @Override
@@ -50,56 +52,60 @@ public class PublicacoesFragment extends Fragment {
         if(view == null) {
             view = inflater.inflate(R.layout.fragment_publicacoes, container, false);
 
-            Publicador.cadastrarListenerPostagem(new Publicador.ListenerPostagens() {
+            adapterListaPosts = new AdapterListaPosts(listPostagem, getContext());
+            adapterListaPosts.setOnPostShareListener(new AdapterListaPosts.PostShareListener() {
                 @Override
-                public void postagemAdicionada(Postagem postagem) {
-                    listPostagem.add(postagem);
-                    atualizarView();
-                }
-
-                @Override
-                public void postagemRemovida(Postagem postagem) {
-
-                }
-            });
-
-            view.findViewById(R.id.compartilhar1).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onPostShareListener != null) {
-                        //Postagem postagem = new Postagem("Olha o que eu construí!", "");
-
-                        //onPostShareListener.compartilhar(postagem);
+                public void compartilhar(Postagem postagem) {
+                    if(onPostShareListener != null) {
+                        onPostShareListener.compartilhar(postagem);
                     }
                 }
             });
 
-            botaoPublicar = view.findViewById(R.id.botao_compartilhar);
+            listViewPublicacoes = view.findViewById(R.id.container_publicacoes);
+            listViewPublicacoes.setAdapter(adapterListaPosts);
+
+            Publicador.cadastrarListenerPostagem(new Publicador.ListenerPostagens() {
+                @Override
+                public void postagemAdicionada(Postagem postagem) {
+                    listPostagem.add(postagem);
+                    adapterListaPosts.notifyDataSetChanged();
+                }
+
+                @Override
+                public void postagemRemovida(Postagem postagem) {
+                    listPostagem.remove(postagem);
+                    adapterListaPosts.notifyDataSetChanged();
+                }
+            });
+
+            botaoPublicar = view.findViewById(R.id.btn_publicar);
             entradaPublicacao = view.findViewById(R.id.entrada_publicacao);
-//            botaoPublicar.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    String publicacaoNova = entradaPublicacao.getText().toString().trim();
-//                    if(publicacaoNova.isEmpty()) {
-//                        return;
-//                    }
-//
-//                    Postagem postagem = new Postagem(publicacaoNova, null, Autenticador.getIdUsuarioLogado(), "normal", null);
-//
-//                    Publicador.publicarPostagem(postagem);
-//                }
-//            });
+            botaoPublicar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String publicacaoNova = entradaPublicacao.getText().toString().trim();
+                    if(publicacaoNova.isEmpty()) {
+                        return;
+                    }
+
+                    Postagem postagem = new Postagem(publicacaoNova, null, Autenticador.getIdUsuarioLogado(), "normal", null);
+
+                    Publicador.publicarPostagem(postagem);
+                    entradaPublicacao.setText("");
+                }
+            });
 
         }
 
         return view;
     }
 
-    private void atualizarView() {
-
+    public void setOnPostShareListener(AdapterListaPosts.PostShareListener onPostShareListener) {
+        this.onPostShareListener = onPostShareListener;
     }
 
-    public void setOnPostShareListener(PostShareListener onPostShareListener) {
-        this.onPostShareListener = onPostShareListener;
+    public AdapterListaPosts.PostShareListener getOnPostShareListener() {
+        return onPostShareListener;
     }
 }

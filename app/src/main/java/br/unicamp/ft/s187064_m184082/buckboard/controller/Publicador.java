@@ -36,12 +36,10 @@ public class Publicador {
         listenerPostagem = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                for (DataSnapshot postagemSnapshot : dataSnapshot.getChildren()) {
-                    Postagem postagem = postagemSnapshot.getValue(Postagem.class);
-                    postagem.setId(postagemSnapshot.getKey());
+                Postagem postagem = dataSnapshot.getValue(Postagem.class);
+                postagem.setId(dataSnapshot.getKey());
 
-                    listenerPostagens.postagemAdicionada(postagem);
-                }
+                listenerPostagens.postagemAdicionada(postagem);
             }
 
             @Override
@@ -51,7 +49,10 @@ public class Publicador {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Postagem postagem = dataSnapshot.getValue(Postagem.class);
+                postagem.setId(dataSnapshot.getKey());
 
+                listenerPostagens.postagemRemovida(postagem);
             }
 
             @Override

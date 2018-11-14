@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
 import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.view.adapter.AdapterListaPosts;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.MensagensFragment;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.PublicacoesFragment;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.SharePostFragment;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction ft = fm.beginTransaction();
         PublicacoesFragment publicacoes = new PublicacoesFragment();
         ft.replace(R.id.fragmentContainer, publicacoes);
-        publicacoes.setOnPostShareListener(new PublicacoesFragment.PostShareListener() {
+        publicacoes.setOnPostShareListener(new AdapterListaPosts.PostShareListener() {
             @Override
             public void compartilhar(Postagem postagem) {
                 FragmentTransaction ft = fm.beginTransaction();
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_publicacoes) {
             FragmentTransaction ft = fm.beginTransaction();
             PublicacoesFragment publicacoes = new PublicacoesFragment();
-            publicacoes.setOnPostShareListener(new PublicacoesFragment.PostShareListener() {
+            publicacoes.setOnPostShareListener(new AdapterListaPosts.PostShareListener() {
                 @Override
                 public void compartilhar(Postagem postagem) {
                     FragmentTransaction ft = fm.beginTransaction();

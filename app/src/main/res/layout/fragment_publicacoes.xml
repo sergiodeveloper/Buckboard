@@ -44,16 +44,11 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <br.unicamp.ft.s187064_m184082.buckboard.view.component.NonScrollListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/container_publicacoes">
-
-                <include layout="@layout/template_postagem"></include>
-
-            </LinearLayout>
-
+                android:id="@+id/container_publicacoes"
+                android:layout_weight="1"></br.unicamp.ft.s187064_m184082.buckboard.view.component.NonScrollListView>
         </LinearLayout>
     </ScrollView>
 
