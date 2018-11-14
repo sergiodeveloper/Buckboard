@@ -13,10 +13,13 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Publicador;
+import br.unicamp.ft.s187064_m184082.buckboard.model.Mensagem;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
 import br.unicamp.ft.s187064_m184082.buckboard.R;
 import br.unicamp.ft.s187064_m184082.buckboard.view.adapter.AdapterListaPosts;
@@ -60,6 +63,13 @@ public class PublicacoesFragment extends Fragment {
                         onPostShareListener.compartilhar(postagem);
                     }
                 }
+
+                @Override
+                public void postar(Postagem postagem) {
+                    if(onPostShareListener != null) {
+                        onPostShareListener.postar(postagem);
+                    }
+                }
             });
 
             listViewPublicacoes = view.findViewById(R.id.container_publicacoes);
@@ -68,7 +78,9 @@ public class PublicacoesFragment extends Fragment {
             Publicador.cadastrarListenerPostagem(new Publicador.ListenerPostagens() {
                 @Override
                 public void postagemAdicionada(Postagem postagem) {
+                    Collections.reverse(listPostagem);
                     listPostagem.add(postagem);
+                    Collections.reverse(listPostagem);
                     adapterListaPosts.notifyDataSetChanged();
                 }
 
@@ -76,23 +88,6 @@ public class PublicacoesFragment extends Fragment {
                 public void postagemRemovida(Postagem postagem) {
                     listPostagem.remove(postagem);
                     adapterListaPosts.notifyDataSetChanged();
-                }
-            });
-
-            botaoPublicar = view.findViewById(R.id.btn_publicar);
-            entradaPublicacao = view.findViewById(R.id.entrada_publicacao);
-            botaoPublicar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String publicacaoNova = entradaPublicacao.getText().toString().trim();
-                    if(publicacaoNova.isEmpty()) {
-                        return;
-                    }
-
-                    Postagem postagem = new Postagem(publicacaoNova, null, Autenticador.getIdUsuarioLogado(), "normal", null);
-
-                    Publicador.publicarPostagem(postagem);
-                    entradaPublicacao.setText("");
                 }
             });
 
@@ -107,5 +102,15 @@ public class PublicacoesFragment extends Fragment {
 
     public AdapterListaPosts.PostShareListener getOnPostShareListener() {
         return onPostShareListener;
+    }
+
+
+
+    private void ordernarPostagens(List<Postagem> postagens) {
+        Collections.sort(postagens, new Comparator<Postagem>() {
+            public int compare(Postagem s1, Postagem s2) {
+                return ((Long) s1.getTimestamp()).compareTo((Long) s2.getTimestamp());
+            }
+        });
     }
 }

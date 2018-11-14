@@ -5,52 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".view.fragment.PublicacoesFragment">
 
-    <ScrollView
+
+    <ListView
+        android:id="@+id/container_publicacoes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/recycler_view_publicacoes"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/Titulo"
-                android:text="Publicações" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/entrada_publicacao"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="O que você quer publicar?" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_publicar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Publicar" />
-
-            </LinearLayout>
-
-            <br.unicamp.ft.s187064_m184082.buckboard.view.component.NonScrollListView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/container_publicacoes"
-                android:layout_weight="1"></br.unicamp.ft.s187064_m184082.buckboard.view.component.NonScrollListView>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:layout_weight="1"></ListView>
 
 
 </FrameLayout>

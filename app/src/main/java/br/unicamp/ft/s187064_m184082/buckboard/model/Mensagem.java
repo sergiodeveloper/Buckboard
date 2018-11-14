@@ -8,7 +8,7 @@ public class Mensagem {
 
     private String mensagem;
 
-    private Object dataHora;
+    private Object timestamp;
 
     private String id;
 
@@ -19,7 +19,7 @@ public class Mensagem {
     public Mensagem(String remetenteIdFirebase, String mensagem) {
         this.remetenteIdFirebase = remetenteIdFirebase;
         this.mensagem = mensagem;
-        this.dataHora = ServerValue.TIMESTAMP;
+        this.timestamp = ServerValue.TIMESTAMP;
     }
 
     public String getRemetenteIdFirebase() {
@@ -38,12 +38,12 @@ public class Mensagem {
         this.mensagem = mensagem;
     }
 
-    public Object getDataHora() {
-        return dataHora;
+    public Object getTimestamp() {
+        return timestamp;
     }
 
-    public void setDataHora(Object dataHora) {
-        this.dataHora = dataHora;
+    public void setTimestamp(Object timestamp) {
+        this.timestamp = timestamp;
     }
 
     public void setId(String id) {

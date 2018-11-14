@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="17dp"
         android:background="@drawable/fundo_post"
-        android:orientation="vertical"
-        android:padding="14dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="14dp">
 
             <ImageView
                 android:layout_width="60dp"
@@ -29,11 +29,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/nome_publicador"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mateus Hikari"
                     android:textColor="#000000"
@@ -44,32 +44,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="Olha o que eu construí!" />
+                    android:paddingLeft="6dp"
+                    android:text="compartilhou" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imagem_post"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:src="@drawable/cerca" />
-
         <LinearLayout
+            android:id="@+id/postArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp">
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/compartilhar1"
-                style="@style/BotaoEnviarFormulario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/side_nav_bar"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Compartilhar" />
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

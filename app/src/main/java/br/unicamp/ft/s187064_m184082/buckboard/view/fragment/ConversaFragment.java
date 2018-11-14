@@ -100,7 +100,7 @@ public class ConversaFragment extends Fragment {
     private void ordernarMensagens(List<Mensagem> mensagens) {
         Collections.sort(mensagens, new Comparator<Mensagem>() {
             public int compare(Mensagem s1, Mensagem s2) {
-                return ((Long) s1.getDataHora()).compareTo((Long) s2.getDataHora());
+                return ((Long) s1.getTimestamp()).compareTo((Long) s2.getTimestamp());
             }
         });
     }
