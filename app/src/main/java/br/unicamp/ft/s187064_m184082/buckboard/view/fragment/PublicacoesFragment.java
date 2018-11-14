@@ -54,6 +54,7 @@ public class PublicacoesFragment extends Fragment {
                 @Override
                 public void postagemAdicionada(Postagem postagem) {
                     listPostagem.add(postagem);
+                    atualizarView();
                 }
 
                 @Override
@@ -92,6 +93,10 @@ public class PublicacoesFragment extends Fragment {
         }
 
         return view;
+    }
+
+    private void atualizarView() {
+
     }
 
     public void setOnPostShareListener(PostShareListener onPostShareListener) {
