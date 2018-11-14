@@ -93,6 +93,7 @@ public class ConversaFragment extends Fragment {
             listaMensagens.addView(new MensagemView(getContext(), mensagem));
         }
 
+
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 

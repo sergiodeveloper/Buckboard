@@ -18,7 +18,9 @@ import java.util.zip.Inflater;
 import br.unicamp.ft.s187064_m184082.buckboard.R;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Compartilhador;
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Perfilador;
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Publicador;
+import br.unicamp.ft.s187064_m184082.buckboard.model.PerfilPublico;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.PublicacoesFragment;
 
@@ -96,8 +98,19 @@ public class AdapterListaPosts extends BaseAdapter {
         } else { // tipo: share
             view = (LinearLayout) inflater.inflate(R.layout.template_postagem_compartilhada, parent, false);
 
-            ((TextView) view.findViewById(R.id.nome_publicador)).setText(postagem.getIdUsuario());
+            ((TextView) view.findViewById(R.id.nome_publicador)).setText("");
             ((ImageView) view.findViewById(R.id.imagem_perfil)).setImageResource(R.drawable.googleg_color);
+            Perfilador.obterPerfilPublico(postagem.getIdUsuario(), new Perfilador.ListenerPerfil() {
+                @Override
+                public void sucesso(PerfilPublico perfilPublico) {
+                    ((TextView) view.findViewById(R.id.nome_publicador)).setText(perfilPublico.getNome());
+                }
+
+                @Override
+                public void erro() {
+                    ((TextView) view.findViewById(R.id.nome_publicador)).setText("??");
+                }
+            });
 
             LinearLayout container = view.findViewById(R.id.postArea);
 
@@ -136,13 +149,24 @@ public class AdapterListaPosts extends BaseAdapter {
     private LinearLayout inflatePostagem(LayoutInflater inflater, Postagem postagem, ViewGroup parent) {
         LinearLayout view = (LinearLayout) inflater.inflate(R.layout.template_postagem, parent, false);
 
-        String nomePublicador = postagem.getIdUsuario();
-        String conteudo = postagem.getConteudo();
 
-        ((TextView) view.findViewById(R.id.nome_publicador)).setText(nomePublicador);
-        ((TextView) view.findViewById(R.id.conteudo_postagem)).setText(conteudo);
-        ((ImageView) view.findViewById(R.id.imagem_post)).setImageResource(R.drawable.cerca);
+        ((TextView) view.findViewById(R.id.nome_publicador)).setText("");
         ((ImageView) view.findViewById(R.id.imagem_perfil)).setImageResource(R.drawable.googleg_color);
+        Perfilador.obterPerfilPublico(postagem.getIdUsuario(), new Perfilador.ListenerPerfil() {
+            @Override
+            public void sucesso(PerfilPublico perfilPublico) {
+                ((TextView) view.findViewById(R.id.nome_publicador)).setText(perfilPublico.getNome());
+            }
+
+            @Override
+            public void erro() {
+                ((TextView) view.findViewById(R.id.nome_publicador)).setText("??");
+            }
+        });
+
+
+        ((TextView) view.findViewById(R.id.conteudo_postagem)).setText(postagem.getConteudo());
+        ((ImageView) view.findViewById(R.id.imagem_post)).setImageResource(R.drawable.cerca);
 
         view.findViewById(R.id.compartilhar1).setOnClickListener(new View.OnClickListener() {
             @Override
