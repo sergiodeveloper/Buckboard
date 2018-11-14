@@ -29,7 +29,7 @@ public class Mensageiro {
     }
 
     public static void enviarMensagem(String conversaId, String remetenteId, String mensagem) {
-        final Mensagem novaMensagem = new Mensagem(remetenteId, mensagem, System.currentTimeMillis());
+        final Mensagem novaMensagem = new Mensagem(remetenteId, mensagem);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("conversa").child(conversaId).child("mensagens").push().setValue(novaMensagem);
@@ -89,10 +89,7 @@ public class Mensageiro {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Mensagem mensagem = dataSnapshot.getValue(Mensagem.class);
-                mensagem.setId(dataSnapshot.getKey());
 
-                listenerMensagem.mensagemAdicionada(mensagem);
             }
 
             @Override

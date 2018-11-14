@@ -1,12 +1,14 @@
 package br.unicamp.ft.s187064_m184082.buckboard.model;
 
+import com.google.firebase.database.ServerValue;
+
 public class Mensagem {
 
     private String remetenteIdFirebase;
 
     private String mensagem;
 
-    private Long dataHora;
+    private Object dataHora;
 
     private String id;
 
@@ -14,10 +16,10 @@ public class Mensagem {
         //required for firebase
     }
 
-    public Mensagem(String remetenteIdFirebase, String mensagem, Long dataHora) {
+    public Mensagem(String remetenteIdFirebase, String mensagem) {
         this.remetenteIdFirebase = remetenteIdFirebase;
         this.mensagem = mensagem;
-        this.dataHora = dataHora;
+        this.dataHora = ServerValue.TIMESTAMP;
     }
 
     public String getRemetenteIdFirebase() {
@@ -36,11 +38,11 @@ public class Mensagem {
         this.mensagem = mensagem;
     }
 
-    public Long getDataHora() {
+    public Object getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(Long dataHora) {
+    public void setDataHora(Object dataHora) {
         this.dataHora = dataHora;
     }
 

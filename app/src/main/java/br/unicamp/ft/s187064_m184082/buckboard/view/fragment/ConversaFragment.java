@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,6 +46,8 @@ public class ConversaFragment extends Fragment {
 
     private LinearLayout listaMensagens;
 
+    private ScrollView scrollView;
+
     public ConversaFragment() {
         // Required empty public constructor
     }
@@ -59,6 +62,16 @@ public class ConversaFragment extends Fragment {
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_conversa, container, false);
+
+            Mensageiro.cadastrarListenerMensagem(conversaId, new Mensageiro.ListenerMensagem() {
+
+                @Override
+                public void mensagemAdicionada(Mensagem mensagem) {
+                    mensagens.add(mensagem);
+                    ordernarMensagens(mensagens);
+                    atualizarView();
+                }
+            });
         }
 
         if (!Autenticador.isLogado()) {
@@ -66,16 +79,7 @@ public class ConversaFragment extends Fragment {
         }
 
         listaMensagens = view.findViewById(R.id.mensagens_conversa);
-
-        Mensageiro.cadastrarListenerMensagem(conversaId, new Mensageiro.ListenerMensagem() {
-
-            @Override
-            public void mensagemAdicionada(Mensagem mensagem) {
-                mensagens.add(mensagem);
-                ordernarMensagens(mensagens);
-                atualizarView();
-            }
-        });
+        scrollView = view.findViewById(R.id.scroll_mensagens);
 
         Button enviarBtn = view.findViewById(R.id.btn_enviar_msg);
         enviarBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +100,15 @@ public class ConversaFragment extends Fragment {
         for (Mensagem mensagem : mensagens) {
             listaMensagens.addView(new MensagemView(getContext(), mensagem));
         }
+
+        scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
 
     private void ordernarMensagens(List<Mensagem> mensagens) {
         Collections.sort(mensagens, new Comparator<Mensagem>() {
             public int compare(Mensagem s1, Mensagem s2) {
-                return s1.getDataHora().compareTo(s2.getDataHora());
+                return ((Long) s1.getDataHora()).compareTo((Long) s2.getDataHora());
             }
         });
     }

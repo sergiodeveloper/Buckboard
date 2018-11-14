@@ -4,6 +4,7 @@ package br.unicamp.ft.s187064_m184082.buckboard.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,9 +70,6 @@ public class MensagensFragment extends Fragment {
 
         conversas = new ArrayList<>();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-
         final ListView listv = view.findViewById(R.id.lista_mensagens);
 
         ArrayAdapter<Conversa> adapter = new ArrayAdapter<Conversa>(view.getContext(), R.layout.layout_list_view_mensagem, R.id.nome_contato, conversas) {
@@ -87,20 +85,11 @@ public class MensagensFragment extends Fragment {
                 Conversa conversa = conversas.get(position);
 
                 if(!conversa.getMensagens().containsKey(conversa.getIdUltimaMensagem())) {
-                    textViewNome.setText(conversa.getPrimeiroUsuarioIdFirebase());
+                    textViewNome.setText(conversa.getNome());
                     textViewMensagem.setText(conversa.getIdUltimaMensagem());
                     imageView.setImageResource(R.mipmap.ic_launcher);
                     return view;
                 }
-
-                Mensagem ultimaMensagem = conversa.getMensagens().get(conversa.getIdUltimaMensagem());
-
-
-                PreviewMensagem entry = new PreviewMensagem(conversa.getId(), ultimaMensagem.getRemetenteIdFirebase(), ultimaMensagem.getMensagem(), R.drawable.mateus_tanaka);
-
-                textViewNome.setText(entry.getNome());
-                textViewMensagem.setText(entry.getMensagem());
-                imageView.setImageResource(R.drawable.mateus_tanaka);
 
                 return view;
             }
@@ -131,6 +120,7 @@ public class MensagensFragment extends Fragment {
         Mensageiro.cadastrarListenerConversas(new Mensageiro.ListenerConversas() {
             @Override
             public void conversaAdicionada(Conversa conversa) {
+                adapter.clear();
                 adapter.add(conversa);
 
                 adapter.notifyDataSetChanged();

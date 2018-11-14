@@ -19,19 +19,20 @@ public class MensagemView extends LinearLayout {
         this.setOrientation(HORIZONTAL);
         this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
-
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        if(mensagem.getRemetenteIdFirebase() == Autenticador.getIdUsuarioLogado()) {
-            // Minha mensagem
-            params.setMargins(40, 0, 0, 0);
-        }
-        else {
-            params.setMargins(0, 0, 40, 0);
-        }
         TextView mensagemTextView = new TextView(context);
         mensagemTextView.setText(mensagem.getMensagem());
-        mensagemTextView.setBackgroundColor(Color.parseColor("#0099ff"));
+
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        if (mensagem.getRemetenteIdFirebase().equals(Autenticador.getIdUsuarioLogado())) {
+            // Minha mensagem
+            params.setMargins(70, 15, 5, 15);
+            mensagemTextView.setBackgroundColor(Color.parseColor("#55ccff"));
+        } else {
+            params.setMargins(5, 15, 70, 15);
+            mensagemTextView.setBackgroundColor(Color.parseColor("#dddddd"));
+        }
         mensagemTextView.setLayoutParams(params);
+        mensagemTextView.setTextSize(20);
 
         this.addView(mensagemTextView);
     }
