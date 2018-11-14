@@ -14,8 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import br.unicamp.ft.s187064_m184082.buckboard.controller.Autenticador;
+import br.unicamp.ft.s187064_m184082.buckboard.controller.Publicador;
 import br.unicamp.ft.s187064_m184082.buckboard.model.Postagem;
 import br.unicamp.ft.s187064_m184082.buckboard.R;
+import br.unicamp.ft.s187064_m184082.buckboard.view.adapter.AdapterListaPosts;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.MensagensFragment;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.PublicacoesFragment;
 import br.unicamp.ft.s187064_m184082.buckboard.view.fragment.SharePostFragment;
@@ -54,20 +56,7 @@ public class MainActivity extends AppCompatActivity
 
         fm = getSupportFragmentManager();
 
-        FragmentTransaction ft = fm.beginTransaction();
-        PublicacoesFragment publicacoes = new PublicacoesFragment();
-        ft.replace(R.id.fragmentContainer, publicacoes);
-        publicacoes.setOnPostShareListener(new PublicacoesFragment.PostShareListener() {
-            @Override
-            public void compartilhar(Postagem postagem) {
-                FragmentTransaction ft = fm.beginTransaction();
-                SharePostFragment fragment = new SharePostFragment();
-                fragment.setPost(postagem);
-                ft.replace(R.id.fragmentContainer, fragment);
-                ft.commit();
-            }
-        });
-        ft.commit();
+        mostrarFragmentPublicacoes();
     }
 
     @Override
@@ -102,6 +91,37 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void mostrarFragmentPublicacoes() {
+        FragmentTransaction ft = fm.beginTransaction();
+        PublicacoesFragment publicacoes = new PublicacoesFragment();
+        publicacoes.setOnPostShareListener(new AdapterListaPosts.PostShareListener() {
+            @Override
+            public void compartilhar(Postagem postagem) {
+                FragmentTransaction ft = fm.beginTransaction();
+                SharePostFragment fragment = new SharePostFragment();
+
+                fragment.setListenerShareEnded(new SharePostFragment.OnPostShareEnded() {
+                    @Override
+                    public void onPostShared() {
+                        mostrarFragmentPublicacoes();
+                    }
+                });
+
+                fragment.setPost(postagem);
+                ft.replace(R.id.fragmentContainer, fragment);
+                ft.commit();
+            }
+
+            @Override
+            public void postar(Postagem postagem) {
+                Publicador.publicarPostagem(postagem);
+            }
+        });
+
+        ft.replace(R.id.fragmentContainer, publicacoes);
+        ft.commit();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -109,21 +129,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_publicacoes) {
-            FragmentTransaction ft = fm.beginTransaction();
-            PublicacoesFragment publicacoes = new PublicacoesFragment();
-            publicacoes.setOnPostShareListener(new PublicacoesFragment.PostShareListener() {
-                @Override
-                public void compartilhar(Postagem postagem) {
-                    FragmentTransaction ft = fm.beginTransaction();
-                    SharePostFragment fragment = new SharePostFragment();
-                    fragment.setPost(postagem);
-                    ft.replace(R.id.fragmentContainer, fragment);
-                    ft.commit();
-                }
-            });
-
-            ft.replace(R.id.fragmentContainer, publicacoes);
-            ft.commit();
+            mostrarFragmentPublicacoes();
         } else if (id == R.id.nav_mensagens) {
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.fragmentContainer, new MensagensFragment());

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fundo_post"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="17dp"
+        android:background="@drawable/fundo_post"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/mateus_tanaka"
+                android:id="@+id/imagem_perfil"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nome_publicador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mateus Hikari"
+                    android:textColor="#000000"
+                    android:textSize="20dp"/>
+
+                <TextView
+                    android:id="@+id/conteudo_postagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="Olha o que eu construí!" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imagem_post"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/cerca" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/compartilhar1"
+                style="@style/BotaoEnviarFormulario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/side_nav_bar"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Compartilhar" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

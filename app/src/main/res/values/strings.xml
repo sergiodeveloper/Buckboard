@@ -102,4 +102,17 @@
     <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
          from https://console.developers.google.com/ -->
     <string name="server_client_id">YOUR_SERVER_CLIENT_ID</string>
+    <string name="e_mail">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="repetir_senha">Repetir senha</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="estado_civil">Estado civil</string>
+    <string name="masculino">Masculino</string>
+    <string name="feminino">Feminino</string>
+    <string name="sexo">Sexo</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="nome">Nome</string>
+    <string name="cadastre_se">Cadastre-se</string>
+    <string name="title_activity_teste">TesteActivity</string>
+    <string name="salvar">Salvar</string>
 </resources>

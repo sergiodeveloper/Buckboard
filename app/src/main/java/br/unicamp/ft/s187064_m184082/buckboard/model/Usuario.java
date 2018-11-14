@@ -1,5 +1,7 @@
 package br.unicamp.ft.s187064_m184082.buckboard.model;
 
+import com.google.firebase.database.ServerValue;
+
 public class Usuario {
 
     private String nome;
@@ -9,6 +11,11 @@ public class Usuario {
     private String email;
     private String idFirebase;
     private String foto;
+    private Object timestamp;
+
+    public Usuario() {
+        this.timestamp = ServerValue.TIMESTAMP;
+    }
 
     public String getNome() {
         return nome;
@@ -64,5 +71,13 @@ public class Usuario {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public Object getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Object timestamp) {
+        this.timestamp = timestamp;
     }
 }
